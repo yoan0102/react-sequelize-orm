@@ -13,6 +13,19 @@ export const getTasks = async (req, res) => {
     return res.status(500).json({ msg: error.message })
   }
 }
+export const getTask = async (req, res) => {
+  try {
+    const { id } = req.params
+    const task = await Task.findOne({
+      where: {
+        id
+      },
+    })
+    res.json(task)
+  } catch (error) {
+    return res.status(500).json({ msg: error.message })
+  }
+}
 
 export const createTask = async (req, res) => {
   try {
@@ -24,3 +37,30 @@ export const createTask = async (req, res) => {
   }
 }
 
+export const updateTask = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { name, projectId, done } = req.body
+    const task = await Task.findOne({
+      where: { id },
+    })
+    task.set(req.body)
+    await task.save()
+    return res.status(200).json(task)
+  } catch (error) {
+    return res.status(500).json({ msg: error.message })
+  }
+}
+
+export const deleteTask = async (req, res) => {
+  try {
+    const { id } = req.params
+    const result = await Task.destroy({
+      where: { id }
+    })
+    res.sendStatus(204)
+  } catch (error) {
+    return res.status(500).json({ msg: error.message })
+
+  }
+}
