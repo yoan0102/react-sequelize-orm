@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { createTask } from '../controllers/tasks.controller.js'
+import { createTask, getTasks } from '../controllers/tasks.controller.js'
 
 const router = Router()
 
 
-router.get('/tasks',)
+router.get('/tasks', getTasks)
 router.get('/tasks/:id',)
 // router.patch('/projects/:id')
 router.post('/tasks', createTask)
